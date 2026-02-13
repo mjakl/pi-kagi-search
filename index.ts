@@ -41,7 +41,7 @@ function saveConfig(config: KagiConfig): void {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
-  fs.writeFileSync(CONFIG_FILE, JSON.stringify(config, null, 2));
+  fs.writeFileSync(CONFIG_FILE, JSON.stringify(config, null, 2), { mode: 0o600 });
 }
 
 function getToken(): string | undefined {
@@ -67,6 +67,9 @@ function getToken(): string | undefined {
 }
 
 function setToken(token: string): void {
+  if (!token || token.length < 10) {
+    throw new Error("Invalid token format");
+  }
   saveConfig({ sessionToken: token });
 }
 
@@ -227,6 +230,15 @@ export default function (pi: ExtensionAPI) {
     }),
 
     async execute(_toolCallId, params, signal, onUpdate, _ctx) {
+      // Validate query
+      if (!params.query?.trim()) {
+        return {
+          content: [{ type: "text", text: "Error: Query cannot be empty" }],
+          details: { error: "Empty query" },
+          isError: true,
+        };
+      }
+
       const token = getToken();
       if (!token) {
         return {
@@ -340,8 +352,13 @@ export default function (pi: ExtensionAPI) {
         return;
       }
 
-      setToken(token);
-      ctx.ui.notify("Kagi session token saved", "success");
+      try {
+        setToken(token);
+        ctx.ui.notify("Kagi session token saved", "success");
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        ctx.ui.notify(`Failed to save token: ${message}`, "error");
+      }
     },
   });
 }

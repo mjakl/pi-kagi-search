@@ -1,7 +1,7 @@
 {
   "name": "pi-kagi-search",
   "version": "1.0.0",
-  "description": "Kagi search and summarization tools for Pi agent",
+  "description": "Kagi search tool for Pi coding agent",
   "type": "module",
   "main": "index.ts",
   "pi": {
@@ -12,8 +12,7 @@
   "keywords": [
     "pi",
     "kagi",
-    "search",
-    "summarizer"
+    "search"
   ],
   "license": "MIT",
   "dependencies": {
