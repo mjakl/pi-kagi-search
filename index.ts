@@ -1,8 +1,7 @@
 import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-agent";
 import { Text } from "@mariozechner/pi-tui";
 import { Type } from "@sinclair/typebox";
-import * as cheerio from "cheerio";
-import type { AnyNode } from "domhandler";
+import { parse, HTMLElement } from "node-html-parser";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import * as os from "node:os";
@@ -104,31 +103,33 @@ async function kagiSearch(
 }
 
 function parseSearchResults(html: string, limit: number): SearchResult[] {
-  const $ = cheerio.load(html);
+  const root = parse(html);
   const results: SearchResult[] = [];
   let resultCount = 0;
 
-  $(".search-result").each((_, element) => {
-    if (resultCount >= limit) return false;
-    const result = extractSearchResult($, element);
+  const searchResults = root.querySelectorAll(".search-result");
+  for (const element of searchResults) {
+    if (resultCount >= limit) break;
+    const result = extractSearchResult(element);
     if (result) {
       results.push(result);
       resultCount++;
     }
-  });
+  }
 
   if (resultCount < limit) {
-    $(".sr-group .__srgi").each((_, element) => {
-      if (resultCount >= limit) return false;
-      const result = extractGroupedResult($, element);
+    const groupedResults = root.querySelectorAll(".sr-group .__srgi");
+    for (const element of groupedResults) {
+      if (resultCount >= limit) break;
+      const result = extractGroupedResult(element);
       if (result) {
         results.push(result);
         resultCount++;
       }
-    });
+    }
   }
 
-  const relatedSearches = extractRelatedSearches($);
+  const relatedSearches = extractRelatedSearches(root);
   if (relatedSearches.length > 0) {
     results.push({
       t: 1,
@@ -139,45 +140,50 @@ function parseSearchResults(html: string, limit: number): SearchResult[] {
   return results;
 }
 
-function extractSearchResult($: cheerio.CheerioAPI, element: AnyNode): SearchResult | null {
+function extractSearchResult(element: HTMLElement): SearchResult | null {
   try {
-    const $element = $(element);
-    const titleLink = $element.find(".__sri_title_link").first();
-    const title = titleLink.text().trim();
-    const url = titleLink.attr("href");
-    const snippet = $element.find(".__sri-desc").text().trim();
+    const titleLink = element.querySelector(".__sri_title_link");
+    if (!titleLink) return null;
+
+    const title = titleLink.textContent.trim();
+    const url = titleLink.getAttribute("href");
+    const snippetElement = element.querySelector(".__sri-desc");
+    const snippet = snippetElement ? snippetElement.textContent.trim() : "";
 
     if (!title || !url) return null;
 
-    return { t: 0, url, title, snippet: snippet || "" };
+    return { t: 0, url, title, snippet };
   } catch {
     return null;
   }
 }
 
-function extractGroupedResult($: cheerio.CheerioAPI, element: AnyNode): SearchResult | null {
+function extractGroupedResult(element: HTMLElement): SearchResult | null {
   try {
-    const $element = $(element);
-    const titleLink = $element.find(".__srgi-title a").first();
-    const title = titleLink.text().trim();
-    const url = titleLink.attr("href");
-    const snippet = $element.find(".__sri-desc").text().trim();
+    const titleLink = element.querySelector(".__srgi-title a");
+    if (!titleLink) return null;
+
+    const title = titleLink.textContent.trim();
+    const url = titleLink.getAttribute("href");
+    const snippetElement = element.querySelector(".__sri-desc");
+    const snippet = snippetElement ? snippetElement.textContent.trim() : "";
 
     if (!title || !url) return null;
 
-    return { t: 0, url, title, snippet: snippet || "" };
+    return { t: 0, url, title, snippet };
   } catch {
     return null;
   }
 }
 
-function extractRelatedSearches($: cheerio.CheerioAPI): string[] {
+function extractRelatedSearches(root: HTMLElement): string[] {
   const related: string[] = [];
   try {
-    $(".related-searches a span").each((_, element) => {
-      const term = $(element).text().trim();
+    const relatedLinks = root.querySelectorAll(".related-searches a span");
+    for (const element of relatedLinks) {
+      const term = element.textContent.trim();
       if (term) related.push(term);
-    });
+    }
   } catch {
     // Return empty array if parsing fails
   }

@@ -19,10 +19,6 @@
     "url": "git+https://github.com/mjakl/pi-kagi-search.git"
   },
   "license": "MIT",
-  "dependencies": {
-    "cheerio": "^1.0.0",
-    "domhandler": "^5.0.3"
-  },
   "devDependencies": {
     "@types/node": "^25.2.3",
     "typescript": "^5.9.3"
@@ -46,5 +42,8 @@
     "@sinclair/typebox": {
       "optional": true
     }
+  },
+  "dependencies": {
+    "node-html-parser": "^7.0.2"
   }
 }
