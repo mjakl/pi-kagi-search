@@ -18,3 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Custom tool rendering with expanded view support
 - Support for up to 50 search results per query
 - Related search suggestions
+
+### Changed
+- Improved security by setting restrictive file permissions (0600) on the config file
+- Added input validation for the search query and session token
+- Updated documentation with the standard installation command
+- Added repository field to `package.json` for better pi integration
