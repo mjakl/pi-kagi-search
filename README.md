@@ -13,7 +13,7 @@
 ### Option 1: Install via Pi
 
 ```bash
-pi install github:mjakl/pi-kagi-search
+pi install git:github.com/mjakl/pi-kagi-search
 ```
 
 ### Option 2: Manual Installation
