@@ -96,6 +96,10 @@ kagi_search({ query: "rust async programming", limit: 20 })
 - Structured search results with title, URL, and snippet for each result
 - Related search suggestions
 
+## Web Fetching
+
+For fetching page contents, we recommend using a dedicated webfetch tool like [Ben Vargas' Firecrawl extension](https://github.com/benvargas/pi-firecrawl). The agent can also fall back to `curl` to retrieve content when needed.
+
 ## Commands
 
 | Command | Description |
