@@ -74,28 +74,6 @@ echo "your-token-here" > ~/.kagi_session_token
 
 This is checked as the last fallback if other methods are not configured.
 
-## Usage
-
-### kagi_search
-
-Search the web using Kagi.com.
-
-```typescript
-// Basic search
-kagi_search({ query: "TypeScript best practices 2025" })
-
-// With custom result count
-kagi_search({ query: "rust async programming", limit: 20 })
-```
-
-**Parameters:**
-- `query` (string, required) - Search query
-- `limit` (number, optional) - Maximum results (default: 10, max: 50)
-
-**Returns:**
-- Structured search results with title, URL, and snippet for each result
-- Related search suggestions
-
 ## Web Fetching
 
 For fetching page contents, we recommend using a dedicated webfetch tool like [Ben Vargas' Firecrawl extension](https://github.com/benvargas/pi-firecrawl). The agent can also fall back to `curl` to retrieve content when needed.
