@@ -225,11 +225,11 @@ export default function (pi: ExtensionAPI) {
   pi.registerTool({
     name: "kagi_search",
     label: "Kagi Search",
-    description: "Search the web using Kagi.com. Returns structured search results with titles, URLs, and snippets. Requires a Kagi session token (set via KAGI_SESSION_TOKEN env var or /kagi-login command).",
+    description: "Search the web with Kagi. Provide a query string. Returns results with title, URL, and snippet plus related searches. Requires a Kagi session token via KAGI_SESSION_TOKEN or /kagi-login.",
     parameters: Type.Object({
-      query: Type.String({ description: "Search query" }),
+      query: Type.String({ description: "What to search for (keywords or a question)." }),
       limit: Type.Optional(Type.Number({ 
-        description: "Maximum number of results (default: 10, max: 50)",
+        description: "How many results to return (1-50). Default: 10.",
         minimum: 1,
         maximum: 50 
       })),
