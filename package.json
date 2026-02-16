@@ -1,5 +1,5 @@
 {
-  "name": "pi-kagi-search",
+  "name": "@mjakl/pi-kagi-search",
   "version": "1.0.0",
   "description": "Kagi search tool for Pi coding agent",
   "type": "module",
@@ -19,6 +19,9 @@
     "url": "git+https://github.com/mjakl/pi-kagi-search.git"
   },
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@types/node": "^25.2.3",
     "typescript": "^5.9.3"
