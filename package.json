@@ -4,6 +4,12 @@
   "description": "Kagi search tool for Pi coding agent",
   "type": "module",
   "main": "index.ts",
+  "files": [
+    "index.ts",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
   "pi": {
     "extensions": [
       "./index.ts"
