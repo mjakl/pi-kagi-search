@@ -1,6 +1,6 @@
 {
   "name": "@mjakl/pi-kagi-search",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Kagi search tool for Pi coding agent",
   "type": "module",
   "main": "index.ts",
