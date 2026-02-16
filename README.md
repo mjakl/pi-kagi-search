@@ -6,7 +6,13 @@
 
 **Uses Existing Subscription** — If you have a Kagi subscription, you can use this extension without needing a separate API key. Just provide your session token.
 
-**Web Search** — Search the web using Kagi's privacy-focused search engine with high-quality results.
+**High-Quality Results** — Kagi is designed for relevance over ads.
+In practice, this often means cleaner, more useful results with less SEO noise,
+so Pi can start from stronger sources.
+
+**Better Research Flow** — When search results are high-signal,
+the agent spends less time filtering low-value pages and more time helping you
+solve the real problem.
 
 ## Install
 
