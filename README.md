@@ -10,13 +10,23 @@
 
 ## Install
 
-### Option 1: Install via Pi
+### Option 1: Install from npm (recommended)
+
+Once the package is published to npm:
+
+```bash
+pi install npm:@mjakl/pi-kagi-search
+```
+
+If it is not published yet, use Option 2 or 3 below.
+
+### Option 2: Install via git
 
 ```bash
 pi install git:github.com/mjakl/pi-kagi-search
 ```
 
-### Option 2: Manual Installation
+### Option 3: Manual Installation
 
 Clone this repository to your Pi extensions directory:
 
