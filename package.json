@@ -18,7 +18,8 @@
   "keywords": [
     "pi",
     "kagi",
-    "search"
+    "search",
+    "pi-package"
   ],
   "repository": {
     "type": "git",
